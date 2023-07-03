@@ -14,7 +14,16 @@ function createChapters(dir) {
                 if (err) {
                     console.log(err)
                 } else {
-                    console.log("Successfully created the chapter.")
+                    if (j === chapters.length - 1) {
+                        fs.rmdir(`${dir}/${volumes[i].name}`, (err) => {
+                            if (err) {
+                                console.log(err)
+                            } else {
+                                console.log('Successfully removed the volume.')
+                            }
+                        })
+                    }
+                    console.log('Successfully created the chapter.')
                 }
             })
             chapterNumber++;
@@ -22,10 +31,12 @@ function createChapters(dir) {
     }
 }
 
-fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
+/* fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
     if (err) {
         console.log(err)
     } else {
         createChapters(COPYDIR)
     }
-})
+}) */
+
+createChapters(COPYDIR);
