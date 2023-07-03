@@ -36,12 +36,17 @@ function createChapters(dir) {
     }
 }
 
-/* fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
+fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
     if (err) {
         console.log(err)
     } else {
         createChapters(COPYDIR)
     }
-}) */
+})
 
 createChapters(COPYDIR);
+fs.appendFile(`${COPYDIR}/.nomedia`, '', (err) => {
+    if (err) {
+        console.log(err)
+    }
+})
