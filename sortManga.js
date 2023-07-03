@@ -10,6 +10,11 @@ function createChapters(dir) {
     for (let i = 0; i < volumes.length; i++) {
         let chapters = fs.readdirSync(`${dir}/${volumes[i].name}`, { withFileTypes: true });
         for (let j = 0; j < chapters.length; j++) {
+            if (!fs.lstatSync(`${dir}/${volumes[i].name}/${chapters[j].name}`).isDirectory()) {
+                console.log('Not a volume.')
+                break;
+            }
+
             fs.rename(`${dir}/${volumes[i].name}/${chapters[j].name}`, `${dir}/ch ${chapterNumber}`, (err) => {
                 if (err) {
                     console.log(err)
