@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-const MANGAFOLDER = '../../Manga';
-const MANGA = 'Ah! My Goddess! Eng (complete)';
-const COPYDIR = `${MANGAFOLDER}/${MANGA}(copy)`;
+const MANGAFOLDER = '';
+const MANGA = '';
+const COPYDIR = `${MANGAFOLDER}/`;
 
 function createChapters(dir) {
     let volumes = fs.readdirSync(dir, { withFileTypes: true });
