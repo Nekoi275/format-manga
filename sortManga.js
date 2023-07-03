@@ -41,12 +41,12 @@ fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
         console.log(err)
     } else {
         createChapters(COPYDIR)
-    }
-})
-
-createChapters(COPYDIR);
-fs.appendFile(`${COPYDIR}/.nomedia`, '', (err) => {
-    if (err) {
-        console.log(err)
+        fs.appendFile(`${COPYDIR}/.nomedia`, '', (err) => {
+            if (err) {
+                console.log(err)
+            } else {
+                console.log('Added .nomedia file.')
+            }
+        })
     }
 })
