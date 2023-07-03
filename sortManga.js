@@ -2,12 +2,7 @@ const fs = require('fs');
 
 const MANGAFOLDER = '../../Manga';
 const MANGA = 'Ah! My Goddess! Eng (complete)';
-const copyDir = `${MANGAFOLDER}/${MANGA}(copy)`;
-
-/* fs.cp(`${MANGAFOLDER}/${MANGA}`, copyDir, { recursive: true }, (err) => {
-    if (err) throw err;
-    console.log('Successfully copied')
-}) */
+const COPYDIR = `${MANGAFOLDER}/${MANGA}(copy)`;
 
 function createChapters(dir) {
     let volumes = fs.readdirSync(dir, { withFileTypes: true });
@@ -24,14 +19,13 @@ function createChapters(dir) {
             })
             chapterNumber++;
         }
-        fs.rmdir(`${dir}/${volumes[i].name}`, (err) => {
-            if (err) {
-                console.log(err)
-            } else {
-                console.log("Successfully removed the volume.")
-            }
-        })
     }
 }
 
-createChapters(copyDir)
+fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
+    if (err) {
+        console.log(err)
+    } else {
+        createChapters(COPYDIR)
+    }
+})
