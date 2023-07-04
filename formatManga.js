@@ -1,8 +1,8 @@
 const fs = require('fs');
 
 const MANGAFOLDER = '../../Manga';
-const MANGA = 'claymore(manga)';
-const COPYDIR = `${MANGAFOLDER}/Claymore`;
+const MANGA = '';
+const COPYDIR = `${MANGAFOLDER}/`;
 
 function createChapters(dir) {
     let volumes = fs.readdirSync(dir, { withFileTypes: true });
@@ -10,13 +10,14 @@ function createChapters(dir) {
     for (let i = 0; i < volumes.length; i++) {
         let chapters = fs.readdirSync(`${dir}/${volumes[i].name}`, { withFileTypes: true });
         for (let j = 0; j < chapters.length; j++) {
+            let isArchive = chapters[j].name.split('.')[1] === 'rar' || chapters[j].name.split('.')[1] === 'zip';
             let isChapter = fs.lstatSync(`${dir}/${volumes[i].name}/${chapters[j].name}`).isDirectory();
-            if (!isChapter) {
+            if (!isChapter && !isArchive) {
                 console.log(`${volumes[i].name} is not a volume folder.`)
                 break;
             }
-
-            fs.rename(`${dir}/${volumes[i].name}/${chapters[j].name}`, `${dir}/ch ${chapterNumber}`, (err) => {
+            let newName = isArchive ? `${dir}/ch ${chapterNumber}.${chapters[j].name.split('.')[1]}` : `${dir}/ch ${chapterNumber}`;
+            fs.rename(`${dir}/${volumes[i].name}/${chapters[j].name}`, newName, (err) => {
                 if (err) {
                     console.log(err)
                 } else {
@@ -37,7 +38,7 @@ function createChapters(dir) {
     }
 }
 
-/* fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
+fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
     if (err) {
         console.log(err)
     } else {
@@ -50,6 +51,4 @@ function createChapters(dir) {
             }
         })
     }
-}) */
-
-createChapters(COPYDIR)
+})
