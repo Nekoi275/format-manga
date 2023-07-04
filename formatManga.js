@@ -1,8 +1,8 @@
 const fs = require('fs');
 
-const MANGAFOLDER = '';
-const MANGA = '';
-const COPYDIR = `${MANGAFOLDER}/`;
+const MANGAFOLDER = '../../Manga';
+const MANGA = 'claymore(manga)';
+const COPYDIR = `${MANGAFOLDER}/Claymore`;
 
 function createChapters(dir) {
     let volumes = fs.readdirSync(dir, { withFileTypes: true });
@@ -10,8 +10,9 @@ function createChapters(dir) {
     for (let i = 0; i < volumes.length; i++) {
         let chapters = fs.readdirSync(`${dir}/${volumes[i].name}`, { withFileTypes: true });
         for (let j = 0; j < chapters.length; j++) {
-            if (!fs.lstatSync(`${dir}/${volumes[i].name}/${chapters[j].name}`).isDirectory()) {
-                console.log('Not a volume.')
+            let isChapter = fs.lstatSync(`${dir}/${volumes[i].name}/${chapters[j].name}`).isDirectory();
+            if (!isChapter) {
+                console.log(`${volumes[i].name} is not a volume folder.`)
                 break;
             }
 
@@ -24,7 +25,7 @@ function createChapters(dir) {
                             if (err) {
                                 console.log(err)
                             } else {
-                                console.log('Successfully removed the volume.')
+                                console.log('Successfully removed the volume folder.')
                             }
                         })
                     }
@@ -36,7 +37,7 @@ function createChapters(dir) {
     }
 }
 
-fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
+/* fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
     if (err) {
         console.log(err)
     } else {
@@ -49,4 +50,6 @@ fs.cp(`${MANGAFOLDER}/${MANGA}`, COPYDIR, { recursive: true }, (err) => {
             }
         })
     }
-})
+}) */
+
+createChapters(COPYDIR)

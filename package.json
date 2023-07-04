@@ -1,11 +1,8 @@
 {
   "name": "sortmanga",
   "version": "1.0.0",
-  "description": "",
+  "description": "Puts manga chapters folders into the order compatible with Tachiyomi manga reader.",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "author": "",
   "license": "ISC"
 }
